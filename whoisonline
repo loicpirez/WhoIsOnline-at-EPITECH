@@ -1,0 +1,58 @@
+#!/usr/bin/ruby
+
+#Bug: can't get SCHOOL status.
+#Bug: if parseconfig == false, problem.
+
+require 'io/console'
+require 'net/http'
+require 'openssl'
+require 'open-uri'
+begin
+   require 'parseconfig'
+rescue LoadError
+    puts "Please install parseconfig."
+    puts "sudo gem install parseconfig"
+    exit 1
+end
+require 'json'
+require_relative 'load/calc'
+require_relative 'load/get'
+require_relative 'load/login'
+require_relative 'load/final'
+require_relative 'load/color'
+require_relative 'load/parsing'
+require_relative 'load/puts'
+require_relative 'load/misc'
+
+puts "Who is online, at {EPITECH.} ?".bg_blue
+print "by Loïc Pirez (pirez_l)\n\n".black.bg_gray
+
+#Yes. This way to do is dirty, but it's a workaround for SSL problem with EPITECH's Intranet.
+suppress_warnings { OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE }
+
+#Parsing conf.
+config = parsing_conf(config)
+
+#Get login, and password.
+login = get_login(config)
+password = get_password(config)
+connect(login, password)
+
+#Parsing town, promo, and status.
+town = parsing_town(config)
+promo = parsing_promo(config)
+status = parsing_status(config)
+
+#Puts the element parsed in the right format
+town = town[0].to_s[0..2].upcase
+promo = promo[0].to_s[0..3].upcase
+status = status[0].to_s.upcase
+
+#Here, we going  to prepare the variable....
+req = get_url(town, promo)
+time = calc_time(req)
+puts_promo(promo, town, status)
+login_town = login_array(req, time)
+
+#And checking the status of every student.
+check_status(login, password, login_town, town, promo, status)
