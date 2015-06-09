@@ -1,4 +1,4 @@
-# WhoIsOnline-at-EPITECH-
+# WhoIsOnline-at-EPITECH
 
 WhoIsOnline is a script which check students connection status in EPITECH's Intranet. (https://intra.epitech.eu)
 It's very basic, as it was a test for playing with EPITECH's Intranet.
