@@ -11,7 +11,11 @@ begin
    require 'parseconfig'
 rescue LoadError
     puts "Please install parseconfig."
-    puts "sudo gem install parseconfig"
+    puts "Do you want to install it ? (Y/n)"
+    ans = gets.chomp
+    if ans == "Y"
+        system("gem install parseconfig")
+    end
     exit 1
 end
 require 'json'
@@ -25,7 +29,7 @@ require_relative 'load/puts'
 require_relative 'load/misc'
 
 puts "Who is online, at {EPITECH.} ?".bg_blue
-print "by Loïc Pirez (pirez_l)\n\n".black.bg_gray
+print "by Loïc Pirez (pirez_l) & Elias Demnati (demnat_e)\n\n".black.bg_gray
 
 #Yes. This way to do is dirty, but it's a workaround for SSL problem with EPITECH's Intranet.
 suppress_warnings { OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE }
@@ -48,7 +52,7 @@ town = town[0].to_s[0..2].upcase
 promo = promo[0].to_s[0..3].upcase
 status = status[0].to_s.upcase
 
-#Here, we going  to prepare the variable....
+#Here, we going to prepare the variable....
 req = get_url(town, promo)
 time = calc_time(req)
 puts_promo(promo, town, status)
