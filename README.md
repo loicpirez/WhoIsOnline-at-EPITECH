@@ -25,6 +25,10 @@ To do
 Change name of town in intro: "LIL" -> "Lille"
 Checking error (bad STATUS, TOWN or PROMO.)
 
+Screenshot
+------------
+![Alt text](http://i.imgur.com/esEgVHD.png "Who is online")
+
 Credits
 ------------
 Big thanks to "Mcfloy" for his intranet API documentation. (https://github.com/Mcfloy/)
